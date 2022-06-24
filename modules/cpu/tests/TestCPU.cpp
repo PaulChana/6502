@@ -2,7 +2,7 @@
 #include <cpu/CPU.h>
 #include <memory/Memory.h>
 
-SCENARIO ("CPU has a program counter", "[cpu]")
+SCENARIO ("CPU can be reset", "[cpu]")
 {
     GIVEN ("A CPU")
     {
@@ -28,19 +28,19 @@ SCENARIO ("CPU has a program counter", "[cpu]")
             }
             AND_THEN ("The registers are zero")
             {
-                REQUIRE (cpu.a () == 0x00);
-                REQUIRE (cpu.x () == 0x00);
-                REQUIRE (cpu.y () == 0x00);
+                REQUIRE (cpu.registers () [cpu::Registers::Register::A] == 0x00);
+                REQUIRE (cpu.registers () [cpu::Registers::Register::X] == 0x00);
+                REQUIRE (cpu.registers () [cpu::Registers::Register::Y] == 0x00);
             }
             AND_THEN ("The flags are all reset")
             {
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::carry));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::zero));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::interrupt_disable));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::decimal_mode));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::brk));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::overflow));
-                REQUIRE (! cpu.flag (cpu::CPU::Flag::negative));
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::carry]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::zero]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::interrupt_disable]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::decimal_mode]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::brk]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::overflow]);
+                REQUIRE (! cpu.flags () [cpu::Flags::Flag::negative]);
             }
         }
     }

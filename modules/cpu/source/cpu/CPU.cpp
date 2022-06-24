@@ -1,5 +1,7 @@
 #include "CPU.h"
 
+#include <memory/Memory.h>
+
 namespace cpu
 {
 CPU::CPU (memory::Memory & memory)
@@ -9,61 +11,50 @@ CPU::CPU (memory::Memory & memory)
 
 void CPU::reset ()
 {
-    reset_program_counter ();
-    reset_stack_pointer ();
-    reset_registers ();
-    reset_flags ();
-}
-
-void CPU::reset_flags ()
-{
     _flags.reset ();
+    _registers.reset ();
+    _program_counter.reset (_memory);
+    _stack_pointer.reset ();
 }
 
-void CPU::reset_registers ()
-{
-    _a = _x = _y = 0x00;
-}
-
-void CPU::reset_program_counter ()
-{
-    _program_counter = _memory [memory::Memory::reset_vector_address [0]];
-    _program_counter |= (_memory [memory::Memory::reset_vector_address [1]] << 8);
-}
-
-void CPU::reset_stack_pointer ()
-{
-    _stack_pointer = 0xFF;
-}
-
-uint16_t CPU::program_counter () const noexcept
+ProgramCounter & CPU::program_counter () noexcept
 {
     return _program_counter;
 }
 
-uint8_t CPU::stack_pointer () const noexcept
+const ProgramCounter & CPU::program_counter () const noexcept
+{
+    return _program_counter;
+}
+
+Registers & CPU::registers () noexcept
+{
+    return _registers;
+}
+
+const Registers & CPU::registers () const noexcept
+{
+    return _registers;
+}
+
+Flags & CPU::flags () noexcept
+{
+    return _flags;
+}
+
+const Flags & CPU::flags () const noexcept
+{
+    return _flags;
+}
+
+StackPointer & CPU::stack_pointer () noexcept
 {
     return _stack_pointer;
 }
 
-uint8_t CPU::a () const noexcept
+const StackPointer & CPU::stack_pointer () const noexcept
 {
-    return _a;
-}
-
-uint8_t CPU::x () const noexcept
-{
-    return _x;
-}
-
-uint8_t CPU::y () const noexcept
-{
-    return _y;
-}
-
-bool CPU::flag (CPU::Flag flag) const noexcept
-{
-    return _flags [size_t (flag)];
+    return _stack_pointer;
 }
 
 }
