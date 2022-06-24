@@ -14,7 +14,13 @@ public:
     Memory () = default;
     ~Memory () = default;
 
+    Memory (const Memory & other) = delete;
+    Memory & operator= (const Memory & other) = delete;
+
     void initialise ();
+
+    [[nodiscard]] uint8_t operator[] (size_t index) const;
+    [[nodiscard]] uint8_t & operator[] (size_t index);
 
     [[nodiscard]] constexpr size_t size () const noexcept
     {
