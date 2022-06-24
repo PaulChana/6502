@@ -1,11 +1,10 @@
 {
-  "name": "cpp-template",
+  "name": "6502",
   "version": "1.0.0",
-  "description": "Example C++ template project",
+  "description": "6502 CPU emulation in C++",
   "private": true,
   "author": "Focusrite / Novation",
-  "license": "Closed source",
-  "prettier": "@focusrite-novation/ampify-prettier-config",
+  "license": "MIT",
   "scripts": {
     "help": "node .documentation/help.js",
     "clean": "node .scripts/build.js clean",
@@ -14,16 +13,12 @@
     "build-debug": "node .scripts/build.js build Debug",
     "test": "node .scripts/build.js test",
     "test-debug": "node .scripts/build.js test Debug",
-    "format": "node .scripts/format.js format",
-    "validate-circle": "circleci config validate --skip-update-check"
+    "format": "node .scripts/format.js format"
   },
   "dependencies": {
     "chalk": "^4.1.0",
     "simple-git": "^3.6.0",
     "walk": "^2.3.15",
     "yargs": "^17.3.1"
-  },
-  "devDependencies": {
-    "@focusrite-novation/ampify-prettier-config": "^1.1.14"
   }
 }

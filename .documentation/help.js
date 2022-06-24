@@ -1,82 +1,75 @@
-const chalk = require("chalk");
+const chalk = require('chalk');
 
 const commands = [
   {
-    command: "help",
+    command: 'help',
     arguments: null,
-    description: "Show this help documentation",
+    description: 'Show this help documentation',
     generalUsage: true,
     dependencies: null,
     equivalent: null,
   },
   {
-    command: "clean",
+    command: 'clean',
     arguments: null,
-    description: "Remove all build directories and start from scratch",
+    description: 'Remove all build directories and start from scratch',
     generalUsage: true,
     dependencies: null,
     equivalent: null,
   },
   {
-    command: "generate",
+    command: 'generate',
     arguments: null,
-    description: "Generate the projects as required for the platform IDE",
+    description: 'Generate the projects as required for the platform IDE',
     generalUsage: true,
     dependencies: null,
     equivalent: null,
   },
   {
-    command: "build",
+    command: 'build',
     arguments: null,
-    description: "Build a release version",
+    description: 'Build a release version',
     generalUsage: true,
-    dependencies: ["npm run generate"],
+    dependencies: ['npm run generate'],
     equivalent: null,
   },
   {
-    command: "build-debug",
+    command: 'build-debug',
     arguments: null,
-    description: "Build a debug version",
+    description: 'Build a debug version',
     generalUsage: true,
-    dependencies: ["npm run generate"],
+    dependencies: ['npm run generate'],
     equivalent: null,
   },
   {
-    command: "test",
+    command: 'test',
     arguments: null,
-    description: "Run all the unit tests in release",
+    description: 'Run all the unit tests in release',
     generalUsage: true,
-    dependencies: ["npm run generate", "npm run build"],
+    dependencies: ['npm run generate', 'npm run build'],
     equivalent: null,
   },
   {
-    command: "test-debug",
+    command: 'test-debug',
     arguments: null,
-    description: "Run all the unit tests in debug",
+    description: 'Run all the unit tests in debug',
     generalUsage: true,
-    dependencies: ["npm run generate", "npm run build-debug"],
+    dependencies: ['npm run generate', 'npm run build-debug'],
     equivalent: null,
   },
   {
-    command: "validate-circle",
+    command: 'timing',
     arguments: null,
-    description: "Validate the circle config.yml",
-    generalUsage: true,
-    dependencies: null,
-    equivalent: null,
-  },
-  {
-    command: "timing",
-    arguments: null,
-    description: "Run the build timing tests, generating utilities/time-trace/trace.log with build info",
+    description:
+      'Run the build timing tests, generating utilities/time-trace/trace.log with build info',
     generalUsage: true,
     dependencies: null,
     equivalent: null,
   },
   {
-    command: "format",
+    command: 'format',
     arguments: null,
-    description: "Run clang-format over the whole C++ codebase",
+    description: 'Run clang-format over the whole C++ codebase',
     generalUsage: false,
     dependencies: null,
     equivalent: null,
@@ -86,9 +79,11 @@ const commands = [
 const printCommand = (scriptCommand) => {
   console.log(
     chalk.green.bold(scriptCommand.command) +
-      " " +
+      ' ' +
       scriptCommand.description +
-      (scriptCommand.generalUsage ? "" : " " + chalk.red.underline("[Not for general use]"))
+      (scriptCommand.generalUsage
+        ? ''
+        : ' ' + chalk.red.underline('[Not for general use]'))
   );
 };
 
@@ -96,9 +91,9 @@ const printArguments = (scriptCommand) => {
   if (scriptCommand.arguments === null) {
     return;
   }
-  console.log(chalk.blue("Arguments:"));
+  console.log(chalk.blue('Arguments:'));
   scriptCommand.arguments.forEach((argument) => {
-    console.log("  [" + argument.argument + "] " + argument.description);
+    console.log('  [' + argument.argument + '] ' + argument.description);
   });
 };
 
@@ -106,16 +101,16 @@ const printEquivalents = (scriptCommand) => {
   if (scriptCommand.equivalent === null) {
     return;
   }
-  console.log(chalk.blue("Equivalents:"));
-  scriptCommand.equivalent.forEach((equiv) => console.log("  " + equiv));
+  console.log(chalk.blue('Equivalents:'));
+  scriptCommand.equivalent.forEach((equiv) => console.log('  ' + equiv));
 };
 
 const printDependencies = (scriptCommand) => {
   if (scriptCommand.dependencies === null) {
     return;
   }
-  console.log(chalk.blue("Dependencies:"));
-  scriptCommand.dependencies.forEach((depends) => console.log("  " + depends));
+  console.log(chalk.blue('Dependencies:'));
+  scriptCommand.dependencies.forEach((depends) => console.log('  ' + depends));
 };
 
 console.clear();
@@ -124,5 +119,5 @@ commands.forEach((scriptCommand) => {
   printArguments(scriptCommand);
   printDependencies(scriptCommand);
   printEquivalents(scriptCommand);
-  console.log("");
+  console.log('');
 });

@@ -1,4 +1,4 @@
-# C++ Example project
+# 6502 Emulation
 
 [![Platform](https://img.shields.io/static/v1?label=Platform&message=macOS%20%7C%20windows&color=pink&style=flat)](./.documentation/building.md)
 
@@ -22,8 +22,6 @@ This is an example C++ project. The aim of this repository is to give you a basi
 
 ### Directory structure
 
-.circleci 
-  - This is the directory that holds the config for circle. If you want to make changes to the default behaviour of circle you would make it in this directory. By default the config in here will pull your repo, setup cmake and node, and then build and test your application.
 .cmake
   - This is where all the cmake files are defined. This repository includes a lot of utility cmake files, that will let you very simply get started with using cmake. <br/>
   We break our project layouts up in to a few types of cmake targets:
@@ -37,10 +35,6 @@ This is an example C++ project. The aim of this repository is to give you a basi
   - This directory contains all the build scripts for the project. Most of this will be called from the npm package scripts. Run `npm run help` to get information on most of these scripts. 
 .utilities
   - Utility build function are in this location. Currently, just the time-trace functions are here to let you time your builds and understand what times the time. See [this](https://github.com/aras-p/ClangBuildAnalyzer) repo for more info
-modules
-  - The modules directory contains source code that will build up to be the main chunk of your application. Consider these to be all of your low level source code that will combine to be your final application. Normally the modules will be broken down to contain 3 directories - source (your library code), tests (your tests) and mocks (your mocks). 
-project
-  - Contains all the source code for your main application, as well as any resources for the application - for example icon files, plists, rc files etc
 
 ## Additional files
 In the directory root you will find a bunch of files:
@@ -48,6 +42,8 @@ In the directory root you will find a bunch of files:
   * The main C++ formatting style is set here
 * .cmake-format
   * Formatting for the cmake files are defined here
+* .prettierrc.json
+  * Formatting for the js files are defined here
 * CMakeLists.txt
   * Core cmake list for the project
 * package(-lock).json
@@ -66,11 +62,6 @@ In the directory root you will find a bunch of files:
 ## Building
 
 You can build on the command line, or using an IDE (We support _XCode_, _CLion_ and _VS2019_ currently). See [here](./.documentation/building.md) for how to build
-
-
-## CI
-
-Our ci is [CircleCI](https://app.circleci.com/pipelines/github/Focusrite-Novation). The config for circle is [here](./.circleci/config.yml)
 
 ## Code formatting
 
