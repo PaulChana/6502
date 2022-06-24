@@ -36,4 +36,15 @@ public:
                   core::Flags & flags,
                   core::Registers & registers) const override;
 };
+
+class LDAAbsolute : public Instruction
+{
+public:
+    LDAAbsolute ();
+    ~LDAAbsolute () override = default;
+    void execute (memory::Memory & memory,
+                  core::ProgramCounter & program_counter,
+                  core::Flags & flags,
+                  core::Registers & registers) const override;
+};
 }

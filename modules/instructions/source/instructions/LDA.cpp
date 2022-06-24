@@ -73,4 +73,26 @@ void LDAZeroPageX::execute (memory::Memory & memory,
     program_counter += 2;
 }
 
+LDAAbsolute::LDAAbsolute ()
+    : Instruction (0xAD, "LDA", 4)
+{
+}
+
+void LDAAbsolute::execute (memory::Memory & memory,
+                           core::ProgramCounter & program_counter,
+                           core::Flags & flags,
+                           core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    auto address = memory [program_counter + 1];
+    address |= (memory [program_counter + 2] << 8);
+
+    registers [core::Registers::Register::A] = memory [address];
+
+    updateLDAFlags (flags, registers);
+
+    program_counter += 3;
+}
+
 }
