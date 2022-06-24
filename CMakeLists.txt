@@ -26,5 +26,7 @@ setup_compiler_cache ()
 setup_sanitizers ()
 setup_time_trace ()
 
-add_subdirectory (modules/memory)
+add_subdirectory (modules/core)
 add_subdirectory (modules/cpu)
+add_subdirectory (modules/instructions)
+add_subdirectory (modules/memory)
