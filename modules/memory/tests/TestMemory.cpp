@@ -30,7 +30,7 @@ SCENARIO ("Memory can be read", "[memory]")
 
         WHEN ("We read in range")
         {
-            for (auto index = 0; index < memory::Memory::memory_size; ++index)
+            for (uint32_t index = 0; index < memory::Memory::memory_size; ++index)
             {
                 THEN ("we get back zero")
                 {
@@ -58,7 +58,7 @@ SCENARIO ("Memory can be written", "[memory]")
 
         WHEN ("We write in range")
         {
-            for (auto index = 0; index < memory::Memory::memory_size; ++index)
+            for (uint32_t index = 0; index < memory::Memory::memory_size; ++index)
             {
                 memory [index] = index % 0xFF;
                 THEN ("we get back 0xFF")

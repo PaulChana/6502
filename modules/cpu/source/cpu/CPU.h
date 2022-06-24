@@ -4,7 +4,6 @@
 #include <core/ProgramCounter.h>
 #include <core/Registers.h>
 #include <core/StackPointer.h>
-
 #include <cstdint>
 
 namespace memory
@@ -25,24 +24,24 @@ public:
 
     void reset ();
 
-    [[nodiscard]] ProgramCounter & program_counter () noexcept;
-    [[nodiscard]] const ProgramCounter & program_counter () const noexcept;
+    [[nodiscard]] core::ProgramCounter & program_counter () noexcept;
+    [[nodiscard]] const core::ProgramCounter & program_counter () const noexcept;
 
-    [[nodiscard]] StackPointer & stack_pointer () noexcept;
-    [[nodiscard]] const StackPointer & stack_pointer () const noexcept;
+    [[nodiscard]] core::StackPointer & stack_pointer () noexcept;
+    [[nodiscard]] const core::StackPointer & stack_pointer () const noexcept;
 
-    [[nodiscard]] Flags & flags () noexcept;
-    [[nodiscard]] const Flags & flags () const noexcept;
+    [[nodiscard]] core::Flags & flags () noexcept;
+    [[nodiscard]] const core::Flags & flags () const noexcept;
 
-    [[nodiscard]] Registers & registers () noexcept;
-    [[nodiscard]] const Registers & registers () const noexcept;
+    [[nodiscard]] core::Registers & registers () noexcept;
+    [[nodiscard]] const core::Registers & registers () const noexcept;
 
 private:
     memory::Memory & _memory;
 
-    ProgramCounter _program_counter;
-    StackPointer _stack_pointer;
-    Registers _registers;
-    Flags _flags;
+    core::ProgramCounter _program_counter;
+    core::StackPointer _stack_pointer;
+    core::Registers _registers;
+    core::Flags _flags;
 };
 }

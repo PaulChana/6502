@@ -28,19 +28,19 @@ SCENARIO ("CPU can be reset", "[cpu]")
             }
             AND_THEN ("The registers are zero")
             {
-                REQUIRE (cpu.registers () [cpu::Registers::Register::A] == 0x00);
-                REQUIRE (cpu.registers () [cpu::Registers::Register::X] == 0x00);
-                REQUIRE (cpu.registers () [cpu::Registers::Register::Y] == 0x00);
+                REQUIRE (cpu.registers () [core::Registers::Register::A] == 0x00);
+                REQUIRE (cpu.registers () [core::Registers::Register::X] == 0x00);
+                REQUIRE (cpu.registers () [core::Registers::Register::Y] == 0x00);
             }
             AND_THEN ("The flags are all reset")
             {
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::carry]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::zero]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::interrupt_disable]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::decimal_mode]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::brk]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::overflow]);
-                REQUIRE (! cpu.flags () [cpu::Flags::Flag::negative]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::carry]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::zero]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::interrupt_disable]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::decimal_mode]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::brk]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::overflow]);
+                REQUIRE (! cpu.flags () [core::Flags::Flag::negative]);
             }
         }
     }
