@@ -26,6 +26,8 @@ public:
     [[nodiscard]] uint8_t operator[] (size_t index) const;
     [[nodiscard]] uint8_t & operator[] (size_t index);
 
+    [[nodiscard]] uint16_t read (size_t index) const;
+
     [[nodiscard]] constexpr size_t size () const noexcept
     {
         return _memory.size ();

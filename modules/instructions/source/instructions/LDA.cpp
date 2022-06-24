@@ -88,8 +88,7 @@ uint8_t LDAAbsolute::execute (memory::Memory & memory,
 {
     assert (memory [program_counter] == opcode ());
 
-    auto address = memory [program_counter + 1];
-    address |= (memory [program_counter + 2] << 8);
+    auto address = memory.read (program_counter + 1);
 
     registers [core::Registers::Register::A] = memory [address];
 
@@ -111,11 +110,8 @@ uint8_t LDAAbsoluteX::execute (memory::Memory & memory,
 {
     assert (memory [program_counter] == opcode ());
 
-    auto address = memory [program_counter + 1];
-    address |= (memory [program_counter + 2] << 8);
-
+    auto address = memory.read (program_counter + 1);
     auto rootAddress = address;
-
     address += registers [core::Registers::Register::X];
 
     registers [core::Registers::Register::A] = memory [address];

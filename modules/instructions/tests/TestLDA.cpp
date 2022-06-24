@@ -442,6 +442,34 @@ SCENARIO ("Can execute LDA Absolute,X", "[instructions/lda]")
                     REQUIRE (program_counter == 3);
                 }
             }
+            AND_WHEN ("It goes over a page boundary")
+            {
+                registers [core::Registers::Register::X] = 0x80;
+
+                memory [0x00] = 0xBD;
+                memory [0x01] = 0x80;
+                memory [0x02] = 0x00;
+                memory [0x100] = 0x05;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                THEN ("It should take more cycles")
+                {
+                    REQUIRE (cycles == 5);
+                }
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::A] == 0x05);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 3")
+                {
+                    REQUIRE (program_counter == 3);
+                }
+            }
         }
     }
 }
