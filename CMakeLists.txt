@@ -27,3 +27,4 @@ setup_sanitizers ()
 setup_time_trace ()
 
 add_subdirectory (modules/memory)
+add_subdirectory (modules/cpu)

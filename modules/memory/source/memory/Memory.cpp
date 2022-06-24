@@ -1,6 +1,6 @@
 #include "Memory.h"
 
-namespace mem
+namespace memory
 {
 void Memory::initialise ()
 {

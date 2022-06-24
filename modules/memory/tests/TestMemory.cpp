@@ -5,7 +5,7 @@ SCENARIO ("Memory behaves properly", "[memory]")
 {
     GIVEN ("A memory block")
     {
-        mem::Memory memory;
+        memory::Memory memory;
         REQUIRE (memory.size () > 0);
 
         WHEN ("The memory is initialised")
@@ -25,12 +25,12 @@ SCENARIO ("Memory can be read", "[memory]")
 {
     GIVEN ("An initialised memory block")
     {
-        mem::Memory memory;
+        memory::Memory memory;
         memory.initialise ();
 
         WHEN ("We read in range")
         {
-            for (auto index = 0; index < mem::Memory::memory_size; ++index)
+            for (auto index = 0; index < memory::Memory::memory_size; ++index)
             {
                 THEN ("we get back zero")
                 {
@@ -43,7 +43,7 @@ SCENARIO ("Memory can be read", "[memory]")
         {
             THEN ("We expect an exception")
             {
-                REQUIRE_THROWS_AS (memory [mem::Memory::memory_size], std::invalid_argument);
+                REQUIRE_THROWS_AS (memory [memory::Memory::memory_size], std::invalid_argument);
             }
         }
     }
@@ -53,12 +53,12 @@ SCENARIO ("Memory can be written", "[memory]")
 {
     GIVEN ("An initialised memory block")
     {
-        mem::Memory memory;
+        memory::Memory memory;
         memory.initialise ();
 
         WHEN ("We write in range")
         {
-            for (auto index = 0; index < mem::Memory::memory_size; ++index)
+            for (auto index = 0; index < memory::Memory::memory_size; ++index)
             {
                 memory [index] = index % 0xFF;
                 THEN ("we get back 0xFF")
@@ -72,7 +72,8 @@ SCENARIO ("Memory can be written", "[memory]")
         {
             THEN ("We expect an exception")
             {
-                REQUIRE_THROWS_AS (memory [mem::Memory::memory_size] = 0xFF, std::invalid_argument);
+                REQUIRE_THROWS_AS (memory [memory::Memory::memory_size] = 0xFF,
+                                   std::invalid_argument);
             }
         }
     }

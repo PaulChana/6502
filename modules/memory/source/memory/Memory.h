@@ -3,12 +3,14 @@
 #include <array>
 #include <cstdint>
 
-namespace mem
+namespace memory
 {
 class Memory
 {
 public:
     static constexpr auto memory_size = 1024 * 64;
+    static constexpr size_t reset_vector_address [2] = {0xFFFC, 0xFFFD};
+
     using MemoryData = std::array<uint8_t, memory_size>;
 
     Memory () = default;
