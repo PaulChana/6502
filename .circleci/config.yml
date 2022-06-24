@@ -1,0 +1,104 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.4.0
+
+aliases:
+  - &windows-env
+    executor:
+      name: win/default
+      shell: bash.exe
+  - &macos-env
+    macos:
+      xcode: 12.3.0
+    resource_class: large
+
+commands:
+  prepare_npm:
+    description: Setup the build environment (cross-platform)
+    steps:
+      - restore_cache:
+          keys:
+          - npm-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          - npm-cache-v1-{{ arch }}-{{ .Branch }}
+          - npm-cache-v1-{{ arch }}
+      - run: npm install --production
+      - save_cache:
+          key: npm-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+  prepare_environment:
+    description: Prepare the build environment
+    steps:
+      - run: ./.scripts/install-cmake.sh
+  build:
+    description: Build the application
+    steps:
+      - checkout
+      - prepare_environment
+      - prepare_npm
+      - run:
+          name: Build the application
+          command: |
+            npm run clean
+            npm run generate
+            npm run build
+  test:
+    description: Test the application
+    steps:
+      - run:
+          name: Test the application
+          command: npm run test
+      - store_artifacts:
+          path: logs
+      - store_test_results:
+          path: logs/unit-tests/unit-tests.xml
+  persist:
+    description: Persist to the workspace
+    steps:
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  attach:
+    description: Attach the workspace
+    steps:
+      - attach_workspace:
+          at: .
+
+jobs:
+  windows_build:
+    <<: *windows-env
+    steps:
+      - build
+      - persist
+  windows_test:
+    <<: *windows-env
+    steps:
+      - attach
+      - prepare_environment
+      - test
+  macos_build:
+    <<: *macos-env
+    steps:
+      - build
+      - persist
+  macos_test:
+    <<: *macos-env
+    steps:
+      - attach
+      - prepare_environment
+      - test
+
+
+workflows:
+  build:
+    jobs:
+      - macos_build
+      - windows_build
+      - macos_test:
+          requires:
+              - macos_build
+      - windows_test:
+          requires:
+              - windows_build

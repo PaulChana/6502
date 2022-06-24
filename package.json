@@ -1,0 +1,29 @@
+{
+  "name": "cpp-template",
+  "version": "1.0.0",
+  "description": "Example C++ template project",
+  "private": true,
+  "author": "Focusrite / Novation",
+  "license": "Closed source",
+  "prettier": "@focusrite-novation/ampify-prettier-config",
+  "scripts": {
+    "help": "node .documentation/help.js",
+    "clean": "node .scripts/build.js clean",
+    "generate": "node .scripts/build.js generate",
+    "build": "node .scripts/build.js build",
+    "build-debug": "node .scripts/build.js build Debug",
+    "test": "node .scripts/build.js test",
+    "test-debug": "node .scripts/build.js test Debug",
+    "format": "node .scripts/format.js format",
+    "validate-circle": "circleci config validate --skip-update-check"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "simple-git": "^3.6.0",
+    "walk": "^2.3.15",
+    "yargs": "^17.3.1"
+  },
+  "devDependencies": {
+    "@focusrite-novation/ampify-prettier-config": "^1.1.14"
+  }
+}

@@ -1,0 +1,15 @@
+option (ENABLE_TIME_TRACE "Enable time trace" OFF)
+function (setup_time_trace)
+  if (NOT ENABLE_TIME_TRACE)
+    return ()
+  endif ()
+
+  if (MSVC)
+    message (FATAL_ERROR "Time trace is not supported on MSVC")
+    return ()
+  endif ()
+
+  message (STATUS "Time trace has been ENABLED for ${CMAKE_OSX_ARCHITECTURES}")
+  list (APPEND CMAKE_CXX_FLAGS_INIT "-ftime-trace")
+  add_compile_options ("-ftime-trace")
+endfunction ()

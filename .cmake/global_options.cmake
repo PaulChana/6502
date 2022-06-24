@@ -1,0 +1,11 @@
+set (CMAKE_XCODE_GENERATE_SCHEME ON CACHE BOOL INTERNAL FORCE)
+set (CMAKE_OSX_ARCHITECTURES "arm64;x86_64"
+     CACHE STRING "macOS universal binary architecture defines")
+set (CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "Minimum macOS version")
+
+cmake_policy (SET CMP0091 NEW)
+set (CMAKE_POLICY_DEFAULT_CMP0091 NEW)
+set (CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set (MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+set_property (GLOBAL PROPERTY USE_FOLDERS ON)
