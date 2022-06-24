@@ -99,4 +99,35 @@ uint8_t LDAAbsolute::execute (memory::Memory & memory,
     return 4;
 }
 
+LDAAbsoluteX::LDAAbsoluteX ()
+    : Instruction (0xBD, "LDA")
+{
+}
+
+uint8_t LDAAbsoluteX::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    auto address = memory [program_counter + 1];
+    address |= (memory [program_counter + 2] << 8);
+
+    auto rootAddress = address;
+
+    address += registers [core::Registers::Register::X];
+
+    registers [core::Registers::Register::A] = memory [address];
+
+    updateLDAFlags (flags, registers);
+
+    program_counter += 3;
+
+    if (((rootAddress ^ address) >> 8) > 0)
+        return 5;
+
+    return 4;
+}
+
 }
