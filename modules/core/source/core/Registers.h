@@ -3,7 +3,7 @@
 #include <array>
 #include <cstdint>
 
-namespace cpu
+namespace core
 {
 class Registers
 {

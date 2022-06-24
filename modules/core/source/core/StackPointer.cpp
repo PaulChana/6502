@@ -1,6 +1,6 @@
 #include "StackPointer.h"
 
-namespace cpu
+namespace core
 {
 void StackPointer::reset ()
 {

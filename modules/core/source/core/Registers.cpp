@@ -1,5 +1,6 @@
 #include "Registers.h"
-namespace cpu
+
+namespace core
 {
 void Registers::reset ()
 {

@@ -1,11 +1,11 @@
 #include <catch2/catch_all.hpp>
-#include <cpu/StackPointer.h>
+#include <core/StackPointer.h>
 
-SCENARIO ("StackPointer can be interacted with", "[cpu]")
+SCENARIO ("StackPointer can be interacted with", "[core]")
 {
     GIVEN ("StackPointer")
     {
-        cpu::StackPointer stackPointer;
+        core::StackPointer stackPointer;
 
         THEN ("All registers should be zeroed")
         {

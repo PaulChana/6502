@@ -6,7 +6,7 @@ namespace memory
 class Memory;
 }
 
-namespace cpu
+namespace core
 {
 class ProgramCounter
 {
@@ -16,7 +16,9 @@ public:
     ProgramCounter (const ProgramCounter & other) = delete;
     ProgramCounter & operator= (const ProgramCounter & other) = delete;
 
-    [[nodiscard]] bool operator== (uint16_t program_counter) const;
+    void operator+= (uint16_t offset);
+    void operator= (uint16_t position);
+    [[nodiscard]] operator uint16_t () const;
 
     void reset (const memory::Memory & memory);
 

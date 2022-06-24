@@ -1,6 +1,6 @@
 #include "Flags.h"
 
-namespace cpu
+namespace core
 {
 void Flags::reset ()
 {

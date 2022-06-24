@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Flags.h"
-#include "ProgramCounter.h"
-#include "Registers.h"
-#include "StackPointer.h"
+#include <core/Flags.h>
+#include <core/ProgramCounter.h>
+#include <core/Registers.h>
+#include <core/StackPointer.h>
 
 #include <cstdint>
 

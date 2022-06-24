@@ -3,7 +3,7 @@
 #include <bitset>
 #include <cstdint>
 
-namespace cpu
+namespace core
 {
 class Flags
 {

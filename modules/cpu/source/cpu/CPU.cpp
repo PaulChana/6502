@@ -17,42 +17,42 @@ void CPU::reset ()
     _stack_pointer.reset ();
 }
 
-ProgramCounter & CPU::program_counter () noexcept
+core::ProgramCounter & CPU::program_counter () noexcept
 {
     return _program_counter;
 }
 
-const ProgramCounter & CPU::program_counter () const noexcept
+const core::ProgramCounter & CPU::program_counter () const noexcept
 {
     return _program_counter;
 }
 
-Registers & CPU::registers () noexcept
+core::Registers & CPU::registers () noexcept
 {
     return _registers;
 }
 
-const Registers & CPU::registers () const noexcept
+const core::Registers & CPU::registers () const noexcept
 {
     return _registers;
 }
 
-Flags & CPU::flags () noexcept
+core::Flags & CPU::flags () noexcept
 {
     return _flags;
 }
 
-const Flags & CPU::flags () const noexcept
+const core::Flags & CPU::flags () const noexcept
 {
     return _flags;
 }
 
-StackPointer & CPU::stack_pointer () noexcept
+core::StackPointer & CPU::stack_pointer () noexcept
 {
     return _stack_pointer;
 }
 
-const StackPointer & CPU::stack_pointer () const noexcept
+const core::StackPointer & CPU::stack_pointer () const noexcept
 {
     return _stack_pointer;
 }

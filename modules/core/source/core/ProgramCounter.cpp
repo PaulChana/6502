@@ -2,7 +2,7 @@
 
 #include <memory/Memory.h>
 
-namespace cpu
+namespace core
 {
 void ProgramCounter::reset (const memory::Memory & memory)
 {
@@ -10,9 +10,19 @@ void ProgramCounter::reset (const memory::Memory & memory)
     _program_counter |= (memory [memory::Memory::reset_vector_address [1]] << 8);
 }
 
-bool ProgramCounter::operator== (uint16_t program_counter) const
+void ProgramCounter::operator= (uint16_t position)
 {
-    return _program_counter == program_counter;
+    _program_counter = position;
+}
+
+void ProgramCounter::operator+= (uint16_t offset)
+{
+    _program_counter += offset;
+}
+
+ProgramCounter::operator uint16_t () const
+{
+    return _program_counter;
 }
 
 }
