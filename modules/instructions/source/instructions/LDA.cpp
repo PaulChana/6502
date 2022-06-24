@@ -16,14 +16,14 @@ void updateLDAFlags (core::Flags & flags, core::Registers & registers)
 }
 
 LDAImmediate::LDAImmediate ()
-    : Instruction (0xA9, "LDA", 2)
+    : Instruction (0xA9, "LDA")
 {
 }
 
-void LDAImmediate::execute (memory::Memory & memory,
-                            core::ProgramCounter & program_counter,
-                            core::Flags & flags,
-                            core::Registers & registers) const
+uint8_t LDAImmediate::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
 
@@ -32,17 +32,18 @@ void LDAImmediate::execute (memory::Memory & memory,
     updateLDAFlags (flags, registers);
 
     program_counter += 2;
+    return 2;
 }
 
 LDAZeroPage::LDAZeroPage ()
-    : Instruction (0xA5, "LDA", 3)
+    : Instruction (0xA5, "LDA")
 {
 }
 
-void LDAZeroPage::execute (memory::Memory & memory,
-                           core::ProgramCounter & program_counter,
-                           core::Flags & flags,
-                           core::Registers & registers) const
+uint8_t LDAZeroPage::execute (memory::Memory & memory,
+                              core::ProgramCounter & program_counter,
+                              core::Flags & flags,
+                              core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
 
@@ -51,17 +52,18 @@ void LDAZeroPage::execute (memory::Memory & memory,
     updateLDAFlags (flags, registers);
 
     program_counter += 2;
+    return 3;
 }
 
 LDAZeroPageX::LDAZeroPageX ()
-    : Instruction (0xB5, "LDA", 4)
+    : Instruction (0xB5, "LDA")
 {
 }
 
-void LDAZeroPageX::execute (memory::Memory & memory,
-                            core::ProgramCounter & program_counter,
-                            core::Flags & flags,
-                            core::Registers & registers) const
+uint8_t LDAZeroPageX::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
 
@@ -71,17 +73,18 @@ void LDAZeroPageX::execute (memory::Memory & memory,
     updateLDAFlags (flags, registers);
 
     program_counter += 2;
+    return 4;
 }
 
 LDAAbsolute::LDAAbsolute ()
-    : Instruction (0xAD, "LDA", 4)
+    : Instruction (0xAD, "LDA")
 {
 }
 
-void LDAAbsolute::execute (memory::Memory & memory,
-                           core::ProgramCounter & program_counter,
-                           core::Flags & flags,
-                           core::Registers & registers) const
+uint8_t LDAAbsolute::execute (memory::Memory & memory,
+                              core::ProgramCounter & program_counter,
+                              core::Flags & flags,
+                              core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
 
@@ -93,6 +96,7 @@ void LDAAbsolute::execute (memory::Memory & memory,
     updateLDAFlags (flags, registers);
 
     program_counter += 3;
+    return 4;
 }
 
 }

@@ -12,7 +12,6 @@ SCENARIO ("Can execute LDA immediate", "[instructions/lda]")
         instructions::LDAImmediate lda;
         REQUIRE (lda.opcode () == 0xA9);
         REQUIRE (lda.mnemonic () == "LDA");
-        REQUIRE (lda.cycles () == 2);
 
         AND_GIVEN ("Memory and flags")
         {
@@ -28,7 +27,8 @@ SCENARIO ("Can execute LDA immediate", "[instructions/lda]")
                 flags [core::Flags::Flag::negative] = true;
                 memory [0x00] = 0xA9;
                 memory [0x01] = 0x10;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 2);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -48,7 +48,8 @@ SCENARIO ("Can execute LDA immediate", "[instructions/lda]")
                 memory [0x01] = 0x84;
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = false;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 2);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -68,7 +69,9 @@ SCENARIO ("Can execute LDA immediate", "[instructions/lda]")
                 memory [0x01] = 0x00;
                 flags [core::Flags::Flag::zero] = false;
                 flags [core::Flags::Flag::negative] = true;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 2);
+
                 THEN ("A,Z,N should be set properly")
                 {
                     REQUIRE (registers [core::Registers::Register::A] == 0x00);
@@ -91,7 +94,6 @@ SCENARIO ("Can execute LDA Zero page", "[instructions/lda]")
         instructions::LDAZeroPage lda;
         REQUIRE (lda.opcode () == 0xA5);
         REQUIRE (lda.mnemonic () == "LDA");
-        REQUIRE (lda.cycles () == 3);
 
         AND_GIVEN ("Memory and flags")
         {
@@ -110,7 +112,8 @@ SCENARIO ("Can execute LDA Zero page", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -131,7 +134,8 @@ SCENARIO ("Can execute LDA Zero page", "[instructions/lda]")
 
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -153,7 +157,9 @@ SCENARIO ("Can execute LDA Zero page", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = false;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
+
                 THEN ("A,Z,N should be set properly")
                 {
                     REQUIRE (registers [core::Registers::Register::A] == 0x00);
@@ -176,7 +182,6 @@ SCENARIO ("Can execute LDA Zero page,X", "[instructions/lda]")
         instructions::LDAZeroPageX lda;
         REQUIRE (lda.opcode () == 0xB5);
         REQUIRE (lda.mnemonic () == "LDA");
-        REQUIRE (lda.cycles () == 4);
 
         AND_GIVEN ("Memory and flags")
         {
@@ -197,7 +202,8 @@ SCENARIO ("Can execute LDA Zero page,X", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -218,7 +224,8 @@ SCENARIO ("Can execute LDA Zero page,X", "[instructions/lda]")
 
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -240,7 +247,8 @@ SCENARIO ("Can execute LDA Zero page,X", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = false;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
                 THEN ("A,Z,N should be set properly")
                 {
                     REQUIRE (registers [core::Registers::Register::A] == 0x00);
@@ -263,7 +271,6 @@ SCENARIO ("Can execute LDA Absolute", "[instructions/lda]")
         instructions::LDAAbsolute lda;
         REQUIRE (lda.opcode () == 0xAD);
         REQUIRE (lda.mnemonic () == "LDA");
-        REQUIRE (lda.cycles () == 4);
 
         AND_GIVEN ("Memory and flags")
         {
@@ -283,7 +290,8 @@ SCENARIO ("Can execute LDA Absolute", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -305,7 +313,8 @@ SCENARIO ("Can execute LDA Absolute", "[instructions/lda]")
 
                 flags [core::Flags::Flag::zero] = true;
                 flags [core::Flags::Flag::negative] = true;
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
 
                 THEN ("A,Z,N should be set properly")
                 {
@@ -328,7 +337,8 @@ SCENARIO ("Can execute LDA Absolute", "[instructions/lda]")
                 flags [core::Flags::Flag::zero] = false;
                 flags [core::Flags::Flag::negative] = true;
 
-                lda.execute (memory, program_counter, flags, registers);
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
                 THEN ("A,Z,N should be set properly")
                 {
                     REQUIRE (registers [core::Registers::Register::A] == 0x00);
