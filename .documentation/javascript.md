@@ -14,10 +14,6 @@ Before running anything you will need to do
 npm install
 ```
 
-## Installation
-You need to first setup a github NPM access as documented [here](https://github.com/Focusrite-Novation/ampify-web-ui#add-focusrite-novation-npm-registry). 
-__Without this, `npm install` will fail, and you will get errors around ampify prettier config__
-
 ## Format on save in VScode
 
 Install the [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode). 

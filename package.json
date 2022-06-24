@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "6502 CPU emulation in C++",
   "private": true,
-  "author": "Focusrite / Novation",
+  "author": "Paul Chana",
   "license": "MIT",
   "scripts": {
     "help": "node .documentation/help.js",
