@@ -69,4 +69,26 @@ public:
                                    core::Flags & flags,
                                    core::Registers & registers) const override;
 };
+
+class LDAIndirectX : public Instruction
+{
+public:
+    LDAIndirectX ();
+    ~LDAIndirectX () override = default;
+    [[nodiscard]] uint8_t execute (memory::Memory & memory,
+                                   core::ProgramCounter & program_counter,
+                                   core::Flags & flags,
+                                   core::Registers & registers) const override;
+};
+
+class LDAIndirectY : public Instruction
+{
+public:
+    LDAIndirectY ();
+    ~LDAIndirectY () override = default;
+    [[nodiscard]] uint8_t execute (memory::Memory & memory,
+                                   core::ProgramCounter & program_counter,
+                                   core::Flags & flags,
+                                   core::Registers & registers) const override;
+};
 }

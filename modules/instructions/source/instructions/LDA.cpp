@@ -154,4 +154,54 @@ uint8_t LDAAbsoluteY::execute (memory::Memory & memory,
     return 4;
 }
 
+LDAIndirectX::LDAIndirectX ()
+    : Instruction (0xA1, "LDA")
+{
+}
+
+uint8_t LDAIndirectX::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    registers [core::Registers::Register::A] =
+        memory [memory.read (program_counter + 1) + registers [core::Registers::Register::X]];
+
+    updateLDAFlags (flags, registers);
+
+    program_counter += 2;
+
+    return 6;
+}
+
+LDAIndirectY::LDAIndirectY ()
+    : Instruction (0xB1, "LDA")
+{
+}
+
+uint8_t LDAIndirectY::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    auto address = memory.read (program_counter + 1);
+    auto rootAddress = address;
+    address += registers [core::Registers::Register::Y];
+
+    registers [core::Registers::Register::A] = memory [address];
+
+    updateLDAFlags (flags, registers);
+
+    program_counter += 2;
+
+    if (((rootAddress ^ address) >> 8) > 0)
+        return 6;
+
+    return 5;
+}
+
 }
