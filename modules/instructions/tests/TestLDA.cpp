@@ -473,3 +473,123 @@ SCENARIO ("Can execute LDA Absolute,X", "[instructions/lda]")
         }
     }
 }
+
+SCENARIO ("Can execute LDA Absolute,Y", "[instructions/lda]")
+{
+    GIVEN ("An LDA Absolute")
+    {
+        instructions::LDAAbsoluteY lda;
+        REQUIRE (lda.opcode () == 0xB9);
+        REQUIRE (lda.mnemonic () == "LDA");
+
+        AND_GIVEN ("Memory and flags")
+        {
+            memory::Memory memory;
+            core::Registers registers;
+            core::Flags flags;
+            core::ProgramCounter program_counter;
+            program_counter = 0;
+
+            registers [core::Registers::Register::Y] = 0x01;
+
+            WHEN ("It is executed with value of 0x10")
+            {
+                memory [0x00] = 0xB9;
+                memory [0x01] = 0x80;
+                memory [0x02] = 0x00;
+                memory [0x81] = 0x0F;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
+
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::A] == 0x0F);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 3")
+                {
+                    REQUIRE (program_counter == 3);
+                }
+            }
+            AND_WHEN ("It is executed with negative value")
+            {
+                memory [0x00] = 0xB9;
+                memory [0x01] = 0x80;
+                memory [0x02] = 0x00;
+                memory [0x81] = 0x84;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
+
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::A] == 0x84);
+                    REQUIRE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 3")
+                {
+                    REQUIRE (program_counter == 3);
+                }
+            }
+            AND_WHEN ("It is executed with zero value")
+            {
+                memory [0x00] = 0xB9;
+                memory [0x01] = 0x80;
+                memory [0x02] = 0x00;
+                memory [0x81] = 0x00;
+
+                flags [core::Flags::Flag::zero] = false;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 4);
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::A] == 0x00);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 3")
+                {
+                    REQUIRE (program_counter == 3);
+                }
+            }
+            AND_WHEN ("It goes over a page boundary")
+            {
+                registers [core::Registers::Register::Y] = 0x80;
+
+                memory [0x00] = 0xB9;
+                memory [0x01] = 0x80;
+                memory [0x02] = 0x00;
+                memory [0x100] = 0x05;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = lda.execute (memory, program_counter, flags, registers);
+                THEN ("It should take more cycles")
+                {
+                    REQUIRE (cycles == 5);
+                }
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::A] == 0x05);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 3")
+                {
+                    REQUIRE (program_counter == 3);
+                }
+            }
+        }
+    }
+}
