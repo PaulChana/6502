@@ -5,9 +5,9 @@
 #include <instructions/LDX.h>
 #include <memory/Memory.h>
 
-SCENARIO ("Can execute LDX immediate", "[instructions/lda]")
+SCENARIO ("Can execute LDX immediate", "[instructions/ldx]")
 {
-    GIVEN ("An LDA immediate")
+    GIVEN ("An LDX immediate")
     {
         instructions::LDXImmediate ldx;
         REQUIRE (ldx.opcode () == 0xA2);
@@ -71,6 +71,94 @@ SCENARIO ("Can execute LDX immediate", "[instructions/lda]")
                 flags [core::Flags::Flag::negative] = true;
                 auto cycles = ldx.execute (memory, program_counter, flags, registers);
                 REQUIRE (cycles == 2);
+
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::X] == 0x00);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 2")
+                {
+                    REQUIRE (program_counter == 2);
+                }
+            }
+        }
+    }
+}
+
+SCENARIO ("Can execute LDX Zero page", "[instructions/ldx]")
+{
+    GIVEN ("An LDX zero page")
+    {
+        instructions::LDXZeroPage ldx;
+        REQUIRE (ldx.opcode () == 0xA6);
+        REQUIRE (ldx.mnemonic () == "LDX");
+
+        AND_GIVEN ("Memory and flags")
+        {
+            memory::Memory memory;
+            core::Registers registers;
+            core::Flags flags;
+            core::ProgramCounter program_counter;
+            program_counter = 0;
+
+            WHEN ("It is executed with value of 0x10")
+            {
+                memory [0x00] = 0xA6;
+                memory [0x01] = 0x10;
+                memory [0x10] = 0x0F;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = ldx.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
+
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::X] == 0x0F);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 2")
+                {
+                    REQUIRE (program_counter == 2);
+                }
+            }
+            AND_WHEN ("It is executed with negative value")
+            {
+                memory [0x00] = 0xA6;
+                memory [0x01] = 0x10;
+                memory [0x10] = 0x84;
+
+                flags [core::Flags::Flag::zero] = true;
+                flags [core::Flags::Flag::negative] = true;
+                auto cycles = ldx.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
+
+                THEN ("A,Z,N should be set properly")
+                {
+                    REQUIRE (registers [core::Registers::Register::X] == 0x84);
+                    REQUIRE (flags [core::Flags::Flag::negative]);
+                    REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                }
+                THEN ("Program counter should be incremented by 2")
+                {
+                    REQUIRE (program_counter == 2);
+                }
+            }
+            AND_WHEN ("It is executed with zero value")
+            {
+                memory [0x00] = 0xA6;
+                memory [0x01] = 0x10;
+                memory [0x10] = 0x00;
+
+                flags [core::Flags::Flag::zero] = false;
+                flags [core::Flags::Flag::negative] = true;
+
+                auto cycles = ldx.execute (memory, program_counter, flags, registers);
+                REQUIRE (cycles == 3);
 
                 THEN ("A,Z,N should be set properly")
                 {

@@ -28,4 +28,24 @@ uint8_t LDXImmediate::execute (memory::Memory & memory,
     program_counter += 2;
     return 2;
 }
+
+LDXZeroPage::LDXZeroPage ()
+    : Instruction (0xA6, "LDX")
+{
+}
+
+uint8_t LDXZeroPage::execute (memory::Memory & memory,
+                              core::ProgramCounter & program_counter,
+                              core::Flags & flags,
+                              core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    registers [core::Registers::Register::X] = memory [memory [program_counter + 1]];
+
+    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
+
+    program_counter += 2;
+    return 3;
+}
 }
