@@ -1,5 +1,7 @@
 #include <catch2/catch_all.hpp>
+#include <core/FlagController.h>
 #include <core/Flags.h>
+#include <core/Registers.h>
 
 SCENARIO ("Flags can be interacted with", "[core]")
 {
@@ -46,6 +48,142 @@ SCENARIO ("Flags can be interacted with", "[core]")
             REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
             REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
             REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+        }
+    }
+}
+
+SCENARIO ("Flags can be updated from registers", "[core]")
+{
+    GIVEN ("Flags, registers and a controller")
+    {
+        core::Flags flags;
+        core::Registers registers;
+        WHEN ("Flags are updated from zero A register")
+        {
+            flags [core::Flags::Flag::zero] = false;
+
+            registers [core::Registers::Register::A] = 0x00;
+            registers [core::Registers::Register::X] = 0x01;
+            registers [core::Registers::Register::Y] = 0x01;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::A);
+
+            THEN ("Zero flag should be set")
+            {
+                REQUIRE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+            }
+        }
+        AND_WHEN ("Flags are updated from zero X register")
+        {
+            flags [core::Flags::Flag::zero] = false;
+
+            registers [core::Registers::Register::A] = 0x01;
+            registers [core::Registers::Register::X] = 0x00;
+            registers [core::Registers::Register::Y] = 0x01;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
+
+            THEN ("Zero flag should be set")
+            {
+                REQUIRE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+            }
+        }
+        AND_WHEN ("Flags are updated from zero Y register")
+        {
+            flags [core::Flags::Flag::zero] = false;
+
+            registers [core::Registers::Register::A] = 0x01;
+            registers [core::Registers::Register::X] = 0x01;
+            registers [core::Registers::Register::Y] = 0x00;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::Y);
+
+            THEN ("Zero flag should be set")
+            {
+                REQUIRE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::negative]);
+            }
+        }
+        AND_WHEN ("Flags are updated from negative A register")
+        {
+            flags [core::Flags::Flag::negative] = false;
+
+            registers [core::Registers::Register::A] = 0x80;
+            registers [core::Registers::Register::X] = 0x00;
+            registers [core::Registers::Register::Y] = 0x00;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::A);
+
+            THEN ("Negative flag should be set")
+            {
+                REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE (flags [core::Flags::Flag::negative]);
+            }
+        }
+        AND_WHEN ("Flags are updated from negative X register")
+        {
+            flags [core::Flags::Flag::negative] = false;
+
+            registers [core::Registers::Register::A] = 0x00;
+            registers [core::Registers::Register::X] = 0x80;
+            registers [core::Registers::Register::Y] = 0x00;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
+
+            THEN ("Negative flag should be set")
+            {
+                REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE (flags [core::Flags::Flag::negative]);
+            }
+        }
+
+        AND_WHEN ("Flags are updated from negative Y register")
+        {
+            flags [core::Flags::Flag::negative] = false;
+
+            registers [core::Registers::Register::A] = 0x00;
+            registers [core::Registers::Register::X] = 0x00;
+            registers [core::Registers::Register::Y] = 0x80;
+
+            core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::Y);
+
+            THEN ("Negative flag should be set")
+            {
+                REQUIRE_FALSE (flags [core::Flags::Flag::zero]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::carry]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::interrupt_disable]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::decimal_mode]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::brk]);
+                REQUIRE_FALSE (flags [core::Flags::Flag::overflow]);
+                REQUIRE (flags [core::Flags::Flag::negative]);
+            }
         }
     }
 }

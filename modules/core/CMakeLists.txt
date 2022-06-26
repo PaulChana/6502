@@ -1,6 +1,8 @@
 make_library (
   core
   SOURCES
+  source/core/FlagController.cpp
+  source/core/FlagController.h
   source/core/Flags.cpp
   source/core/Flags.h
   source/core/ProgramCounter.cpp
