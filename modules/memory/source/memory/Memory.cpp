@@ -30,4 +30,9 @@ uint8_t & Memory::operator[] (size_t index)
     return _memory [index];
 }
 
+bool Memory::crosses_page_boundary (size_t address1, size_t address2)
+{
+    return ((address1 ^ address2) >> 8) > 0;
+}
+
 }

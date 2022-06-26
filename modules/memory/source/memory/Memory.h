@@ -8,9 +8,7 @@ namespace memory
 class Memory
 {
 public:
-    static constexpr uint8_t page_size = 64;
-    static constexpr uint8_t number_of_pages = 64;
-    static constexpr uint32_t memory_size = uint32_t (page_size * number_of_pages);
+    static constexpr uint32_t memory_size = 65'536;
     static constexpr size_t reset_vector_address [2] = {0xFFFC, 0xFFFD};
 
     using MemoryData = std::array<uint8_t, memory_size>;
@@ -27,6 +25,8 @@ public:
     [[nodiscard]] uint8_t & operator[] (size_t index);
 
     [[nodiscard]] uint16_t read (size_t index) const;
+
+    static bool crosses_page_boundary (size_t address1, size_t address2);
 
     [[nodiscard]] constexpr size_t size () const noexcept
     {
