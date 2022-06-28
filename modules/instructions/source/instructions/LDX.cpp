@@ -69,4 +69,51 @@ uint8_t LDXZeroPageY::execute (memory::Memory & memory,
     program_counter += 2;
     return 4;
 }
+
+LDXAbsolute::LDXAbsolute ()
+    : Instruction (0xAE, "LDX")
+{
+}
+
+uint8_t LDXAbsolute::execute (memory::Memory & memory,
+                              core::ProgramCounter & program_counter,
+                              core::Flags & flags,
+                              core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    auto address = memory.read (program_counter + 1);
+
+    registers [core::Registers::Register::X] = memory [address];
+
+    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
+
+    program_counter += 3;
+    return 4;
+}
+
+LDXAbsoluteY::LDXAbsoluteY ()
+    : Instruction (0xBE, "LDX")
+{
+}
+
+uint8_t LDXAbsoluteY::execute (memory::Memory & memory,
+                               core::ProgramCounter & program_counter,
+                               core::Flags & flags,
+                               core::Registers & registers) const
+{
+    assert (memory [program_counter] == opcode ());
+
+    auto address = memory.read (program_counter + 1);
+    auto rootAddress = address;
+    address += registers [core::Registers::Register::Y];
+
+    registers [core::Registers::Register::X] = memory [address];
+
+    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
+
+    program_counter += 3;
+
+    return memory::Memory::crosses_page_boundary (rootAddress, address) ? 5 : 4;
+}
 }

@@ -36,4 +36,26 @@ public:
                                    core::Flags & flags,
                                    core::Registers & registers) const override;
 };
+
+class LDXAbsolute : public Instruction
+{
+public:
+    LDXAbsolute ();
+    ~LDXAbsolute () override = default;
+    [[nodiscard]] uint8_t execute (memory::Memory & memory,
+                                   core::ProgramCounter & program_counter,
+                                   core::Flags & flags,
+                                   core::Registers & registers) const override;
+};
+
+class LDXAbsoluteY : public Instruction
+{
+public:
+    LDXAbsoluteY ();
+    ~LDXAbsoluteY () override = default;
+    [[nodiscard]] uint8_t execute (memory::Memory & memory,
+                                   core::ProgramCounter & program_counter,
+                                   core::Flags & flags,
+                                   core::Registers & registers) const override;
+};
 }
