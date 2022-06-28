@@ -11,7 +11,6 @@ SCENARIO ("Can execute LDA immediate", "[instructions/lda]")
     {
         instructions::LDAImmediate lda;
         REQUIRE (lda.opcode () == 0xA9);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -93,7 +92,6 @@ SCENARIO ("Can execute LDA Zero page", "[instructions/lda]")
     {
         instructions::LDAZeroPage lda;
         REQUIRE (lda.opcode () == 0xA5);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -181,7 +179,6 @@ SCENARIO ("Can execute LDA Zero page,X", "[instructions/lda]")
     {
         instructions::LDAZeroPageX lda;
         REQUIRE (lda.opcode () == 0xB5);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -270,7 +267,6 @@ SCENARIO ("Can execute LDA Absolute", "[instructions/lda]")
     {
         instructions::LDAAbsolute lda;
         REQUIRE (lda.opcode () == 0xAD);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -360,7 +356,6 @@ SCENARIO ("Can execute LDA Absolute,X", "[instructions/lda]")
     {
         instructions::LDAAbsoluteX lda;
         REQUIRE (lda.opcode () == 0xBD);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -480,7 +475,6 @@ SCENARIO ("Can execute LDA Absolute,Y", "[instructions/lda]")
     {
         instructions::LDAAbsoluteY lda;
         REQUIRE (lda.opcode () == 0xB9);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -600,7 +594,6 @@ SCENARIO ("Can execute LDA Indirect,X", "[instructions/lda]")
     {
         instructions::LDAIndirectX lda;
         REQUIRE (lda.opcode () == 0xA1);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -689,7 +682,6 @@ SCENARIO ("Can execute LDA Indirect,Y", "[instructions/lda]")
     {
         instructions::LDAIndirectY lda;
         REQUIRE (lda.opcode () == 0xB1);
-        REQUIRE (lda.mnemonic () == "LDA");
 
         AND_GIVEN ("Memory and flags")
         {

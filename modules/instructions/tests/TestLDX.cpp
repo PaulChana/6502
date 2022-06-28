@@ -11,7 +11,6 @@ SCENARIO ("Can execute LDX immediate", "[instructions/ldx]")
     {
         instructions::LDXImmediate ldx;
         REQUIRE (ldx.opcode () == 0xA2);
-        REQUIRE (ldx.mnemonic () == "LDX");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -93,7 +92,6 @@ SCENARIO ("Can execute LDX Zero page", "[instructions/ldx]")
     {
         instructions::LDXZeroPage ldx;
         REQUIRE (ldx.opcode () == 0xA6);
-        REQUIRE (ldx.mnemonic () == "LDX");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -181,7 +179,6 @@ SCENARIO ("Can execute LDX Zero page,Y", "[instructions/ldx]")
     {
         instructions::LDXZeroPageY ldx;
         REQUIRE (ldx.opcode () == 0xB6);
-        REQUIRE (ldx.mnemonic () == "LDX");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -270,7 +267,6 @@ SCENARIO ("Can execute LDX Absolute", "[instructions/ldx]")
     {
         instructions::LDXAbsolute ldx;
         REQUIRE (ldx.opcode () == 0xAE);
-        REQUIRE (ldx.mnemonic () == "LDX");
 
         AND_GIVEN ("Memory and flags")
         {
@@ -360,7 +356,6 @@ SCENARIO ("Can execute LDX Absolute,Y", "[instructions/ldx]")
     {
         instructions::LDXAbsoluteY ldx;
         REQUIRE (ldx.opcode () == 0xBE);
-        REQUIRE (ldx.mnemonic () == "LDX");
 
         AND_GIVEN ("Memory and flags")
         {

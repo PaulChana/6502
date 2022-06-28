@@ -10,7 +10,7 @@
 namespace instructions
 {
 LDXImmediate::LDXImmediate ()
-    : Instruction (0xA2, "LDX")
+    : Instruction (0xA2)
 {
 }
 
@@ -20,17 +20,11 @@ uint8_t LDXImmediate::execute (memory::Memory & memory,
                                core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
-
-    registers [core::Registers::Register::X] = memory [program_counter + 1];
-
-    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
-
-    program_counter += 2;
-    return 2;
+    return LD::immediate (memory, program_counter, flags, registers, core::Registers::Register::X);
 }
 
 LDXZeroPage::LDXZeroPage ()
-    : Instruction (0xA6, "LDX")
+    : Instruction (0xA6)
 {
 }
 
@@ -40,17 +34,11 @@ uint8_t LDXZeroPage::execute (memory::Memory & memory,
                               core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
-
-    registers [core::Registers::Register::X] = memory [memory [program_counter + 1]];
-
-    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
-
-    program_counter += 2;
-    return 3;
+    return LD::zero_page (memory, program_counter, flags, registers, core::Registers::Register::X);
 }
 
 LDXZeroPageY::LDXZeroPageY ()
-    : Instruction (0xB6, "LDX")
+    : Instruction (0xB6)
 {
 }
 
@@ -60,18 +48,16 @@ uint8_t LDXZeroPageY::execute (memory::Memory & memory,
                                core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
-
-    registers [core::Registers::Register::X] =
-        memory [memory [program_counter + 1] + registers [core::Registers::Register::Y]];
-
-    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
-
-    program_counter += 2;
-    return 4;
+    return LD::zero_page_shift (memory,
+                                program_counter,
+                                flags,
+                                registers,
+                                core::Registers::Register::X,
+                                core::Registers::Register::Y);
 }
 
 LDXAbsolute::LDXAbsolute ()
-    : Instruction (0xAE, "LDX")
+    : Instruction (0xAE)
 {
 }
 
@@ -81,19 +67,11 @@ uint8_t LDXAbsolute::execute (memory::Memory & memory,
                               core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
-
-    auto address = memory.read (program_counter + 1);
-
-    registers [core::Registers::Register::X] = memory [address];
-
-    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
-
-    program_counter += 3;
-    return 4;
+    return LD::absolute (memory, program_counter, flags, registers, core::Registers::Register::X);
 }
 
 LDXAbsoluteY::LDXAbsoluteY ()
-    : Instruction (0xBE, "LDX")
+    : Instruction (0xBE)
 {
 }
 
@@ -103,17 +81,11 @@ uint8_t LDXAbsoluteY::execute (memory::Memory & memory,
                                core::Registers & registers) const
 {
     assert (memory [program_counter] == opcode ());
-
-    auto address = memory.read (program_counter + 1);
-    auto rootAddress = address;
-    address += registers [core::Registers::Register::Y];
-
-    registers [core::Registers::Register::X] = memory [address];
-
-    core::FlagController::update_flags_ld (flags, registers, core::Registers::Register::X);
-
-    program_counter += 3;
-
-    return memory::Memory::crosses_page_boundary (rootAddress, address) ? 5 : 4;
+    return LD::absolute_shift (memory,
+                               program_counter,
+                               flags,
+                               registers,
+                               core::Registers::Register::X,
+                               core::Registers::Register::Y);
 }
 }
