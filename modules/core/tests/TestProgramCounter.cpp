@@ -32,6 +32,26 @@ SCENARIO ("ProgramCounter can be interacted with", "[core]")
                     counter += 0x05;
                     REQUIRE (counter == 0x1005);
                 }
+                AND_THEN ("We can increment the counter")
+                {
+                    counter++;
+                    REQUIRE (counter == 0x1001);
+                }
+                AND_THEN ("We can increment the counter")
+                {
+                    ++counter;
+                    REQUIRE (counter == 0x1001);
+                }
+                AND_THEN ("We can decrement the counter")
+                {
+                    counter--;
+                    REQUIRE (counter == 0xFFF);
+                }
+                AND_THEN ("We can decrement the counter")
+                {
+                    --counter;
+                    REQUIRE (counter == 0xFFF);
+                }
                 AND_WHEN ("We set the counter")
                 {
                     counter = 0x0100;

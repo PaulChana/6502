@@ -16,6 +16,11 @@ public:
     ProgramCounter (const ProgramCounter & other) = delete;
     ProgramCounter & operator= (const ProgramCounter & other) = delete;
 
+    ProgramCounter & operator++ ();
+    ProgramCounter & operator-- ();
+    ProgramCounter & operator++ (int);
+    ProgramCounter & operator-- (int);
+
     void operator+= (uint16_t offset);
     void operator= (uint16_t position);
     [[nodiscard]] operator uint16_t () const;
