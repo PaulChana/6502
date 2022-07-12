@@ -53,6 +53,17 @@ public:
         return _memory.end ();
     }
 
+    class Watcher
+    {
+    public:
+        Watcher (Memory & memory);
+        [[nodiscard]] bool has_changed () const;
+
+    private:
+        Memory & _memory;
+        MemoryData _source_memory;
+    };
+
 private:
     MemoryData _memory;
 };

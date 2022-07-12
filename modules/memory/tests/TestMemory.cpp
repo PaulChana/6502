@@ -21,6 +21,29 @@ SCENARIO ("Memory behaves properly", "[memory]")
     }
 }
 
+SCENARIO ("Memory watchers trigger", "[memory]")
+{
+    GIVEN ("Memory and watcher")
+    {
+        memory::Memory memory;
+        memory.initialise ();
+        memory::Memory::Watcher watcher (memory);
+        REQUIRE (! watcher.has_changed ());
+
+        WHEN ("The memory changes, the watcher updates")
+        {
+            memory [0] = 0xFF;
+            REQUIRE (watcher.has_changed ());
+
+            AND_WHEN ("It is changed back")
+            {
+                memory [0] = 0x00;
+                REQUIRE (! watcher.has_changed ());
+            }
+        }
+    }
+}
+
 SCENARIO ("Memory can be read", "[memory]")
 {
     GIVEN ("An initialised memory block")

@@ -35,4 +35,15 @@ bool Memory::crosses_page_boundary (size_t address1, size_t address2)
     return ((address1 ^ address2) >> 8) > 0;
 }
 
+Memory::Watcher::Watcher (Memory & memory)
+    : _memory (memory)
+    , _source_memory (memory._memory)
+{
+}
+
+bool Memory::Watcher::has_changed () const
+{
+    return _source_memory != _memory._memory;
+}
+
 }
