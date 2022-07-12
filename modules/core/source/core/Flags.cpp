@@ -16,4 +16,15 @@ std::bitset<Flags::number_of_flags>::reference Flags::operator[] (Flag flag) noe
 {
     return _flags [size_t (flag)];
 }
+
+Flags::Watcher::Watcher (Flags & flags)
+    : _flags (flags)
+    , _source_flags (flags._flags)
+{
+}
+
+bool Flags::Watcher::has_changed () const
+{
+    return _source_flags != _flags._flags;
+}
 }

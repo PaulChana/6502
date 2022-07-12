@@ -31,6 +31,18 @@ public:
     [[nodiscard]] bool operator[] (Flag flag) const;
     [[nodiscard]] std::bitset<number_of_flags>::reference operator[] (Flag flag) noexcept;
 
+    class Watcher
+    {
+    public:
+        Watcher (Flags & flags);
+
+        [[nodiscard]] bool has_changed () const;
+
+    private:
+        Flags & _flags;
+        std::bitset<number_of_flags> _source_flags;
+    };
+
 private:
     std::bitset<number_of_flags> _flags = {false};
 };

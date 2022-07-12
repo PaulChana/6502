@@ -3,6 +3,28 @@
 #include <core/Flags.h>
 #include <core/Registers.h>
 
+SCENARIO ("Flag watchers trigger", "[core]")
+{
+    GIVEN ("Flags and watcher")
+    {
+        core::Flags flags;
+        core::Flags::Watcher watcher (flags);
+        REQUIRE (! watcher.has_changed ());
+
+        WHEN ("The flag state changes, the watcher updates")
+        {
+            flags [core::Flags::Flag::zero] = true;
+            REQUIRE (watcher.has_changed ());
+
+            AND_WHEN ("It is changed back")
+            {
+                flags [core::Flags::Flag::zero] = false;
+                REQUIRE (! watcher.has_changed ());
+            }
+        }
+    }
+}
+
 SCENARIO ("Flags can be interacted with", "[core]")
 {
     GIVEN ("Flags")
