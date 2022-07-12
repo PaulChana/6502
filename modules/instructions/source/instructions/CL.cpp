@@ -1,4 +1,4 @@
-#include "CLC.h"
+#include "CL.h"
 
 #include <core/Flags.h>
 #include <core/ProgramCounter.h>
@@ -6,19 +6,20 @@
 
 namespace instructions
 {
-CLC::CLC ()
-    : Instruction (0x18)
+CL::CL (uint8_t opcode, core::Flags::Flag flag)
+    : Instruction (opcode)
+    , _flag (flag)
 {
 }
 
-uint8_t CLC::execute (memory::Memory & memory,
+uint8_t CL::execute (memory::Memory & memory,
                       core::ProgramCounter & program_counter,
                       core::Flags & flags,
                       core::Registers &) const
 {
     assert (memory [program_counter] == opcode ());
     ++program_counter;
-    flags [core::Flags::Flag::carry] = false;
+    flags [_flag] = false;
     return 2;
 }
 }

@@ -2,8 +2,8 @@ make_library (
   instructions
   SOURCES
   source/instructions/Instruction.h
-  source/instructions/CLC.cpp
-  source/instructions/CLC.h
+  source/instructions/CL.cpp
+  source/instructions/CL.h
   source/instructions/LD.cpp
   source/instructions/LD.h
   source/instructions/LDA.cpp
@@ -22,6 +22,9 @@ make_test (
   instructions
   SOURCES
   tests/TestCLC.cpp
+  tests/TestCLD.cpp
+  tests/TestCLI.cpp
+  tests/TestCLV.cpp
   tests/TestLDA.cpp
   tests/TestLDX.cpp
   tests/TestLDY.cpp

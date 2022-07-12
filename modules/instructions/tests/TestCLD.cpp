@@ -5,34 +5,34 @@
 #include <instructions/CL.h>
 #include <memory/Memory.h>
 
-SCENARIO ("Can execute CLC", "[instructions/clc]")
+SCENARIO ("Can execute CLD", "[instructions/cld]")
 {
     GIVEN ("An instruction, memory and flags")
     {
-        instructions::CLC clc;
-        REQUIRE (clc.opcode () == 0x18);
+        instructions::CLD cld;
+        REQUIRE (cld.opcode () == 0xD8);
 
         memory::Memory memory;
-        memory [0x00] = 0x18;
+        memory [0x00] = 0xD8;
 
         core::Registers registers;
         core::Flags flags;
         core::ProgramCounter program_counter;
         program_counter = 0;
 
-        flags [core::Flags::Flag::carry] = true;
+        flags [core::Flags::Flag::decimal_mode] = true;
 
         WHEN ("It is executed")
         {
             core::Flags::Watcher flag_watcher (flags);
 
-            auto cycles = clc.execute (memory, program_counter, flags, registers);
+            auto cycles = cld.execute (memory, program_counter, flags, registers);
             REQUIRE (cycles == 2);
 
             THEN ("There should be a change in the flags")
             {
                 REQUIRE (flag_watcher.has_changed ());
-                REQUIRE (flags [core::Flags::Flag::carry] == false);
+                REQUIRE (flags [core::Flags::Flag::decimal_mode] == false);
             }
             THEN ("Program counter should be incremented by 1")
             {
