@@ -10,6 +10,8 @@ make_library (
   source/instructions/LDX.h
   source/instructions/LDY.cpp
   source/instructions/LDY.h
+  source/instructions/NOP.cpp
+  source/instructions/NOP.h
   LIBRARIES
   memory
   core)
@@ -19,4 +21,5 @@ make_test (
   SOURCES
   tests/TestLDA.cpp
   tests/TestLDX.cpp
-  tests/TestLDY.cpp)
+  tests/TestLDY.cpp
+  tests/TestNOP.cpp)
